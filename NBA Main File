@@ -1,0 +1,661 @@
+import openpyxl
+import sys
+
+wb=openpyxl.load_workbook("nba excel sheet.xlsx") 
+ws=wb["AllData"]
+       
+def quit():
+    sys.exit()
+
+def findTotalGamesFor(playerName):
+    b_column = ws["B"]
+    findGamesPlayed = playerName
+    playerGamesPlayed = 0
+    for cell in b_column:
+        if cell.value == findGamesPlayed:
+            playerGamesPlayed = playerGamesPlayed + 1
+    return playerGamesPlayed
+
+def findAPG():
+    b_column = ws["B"]
+    print("Which player would you like to find their assists per game?")
+    userInput = input()
+    # findGamesPlayed = userInput
+    totalAssists = 0
+    apg = 0
+    t_column = ws["T"]
+    for player, assists in zip(b_column, t_column):
+        if userInput.lower() == str(player.value).strip().lower():
+            totalAssists = totalAssists + int(assists.value)
+    totalGames = findTotalGamesFor(userInput)
+    if totalGames > 0:
+        apg = totalAssists / findTotalGamesFor(userInput)
+        print(userInput , "averages" , apg , "assists per game.")
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")
+
+def findAPG2(playerName):
+    b_column = ws["B"]
+    totalAssists = 0
+    apg = 0
+    t_column = ws["T"]
+    for player, assists in zip(b_column, t_column):
+        if playerName.lower() == str(player.value).strip().lower():
+            totalAssists = totalAssists + int(assists.value)
+    totalGames = findTotalGamesFor(playerName)
+    if totalGames > 0:
+        apg = totalAssists / findTotalGamesFor(playerName)
+        # print(playerName , "averages" , apg , "assists per game.")
+        return(apg)
+    else:
+        print(playerName , "has no recorded games or the name was not found.")
+
+def findFGP():
+    b_column = ws["B"]
+    print("Which player would you like to find their shooting percentage?")
+    userInput = input()
+    # findGamesPlayed = userInput
+    totalShots = 0
+    totalMakes = 0
+    fgp = 0
+    h_column = ws["H"]
+    i_column = ws["I"]
+    for player, attempts , made in zip(b_column, i_column, h_column):
+        if userInput == player.value:
+            totalShots = totalShots + int(attempts.value)
+            totalMakes = totalMakes + int(made.value)
+    totalGames = findTotalGamesFor(userInput)
+    if totalGames > 0 and totalShots > 0:
+        fgp = ( totalMakes / totalShots ) * 100
+        print(userInput , "shoots" , fgp , "%.")
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")
+    
+def findFGP2(playerName):
+    b_column = ws["B"]
+    totalShots = 0
+    totalMakes = 0
+    fgp = 0
+    h_column = ws["H"]
+    i_column = ws["I"]
+    for player, attempts , made in zip(b_column, i_column, h_column):
+        if playerName == player.value:
+            totalShots = totalShots + int(attempts.value)
+            totalMakes = totalMakes + int(made.value)
+    totalGames = findTotalGamesFor(playerName)
+    if totalGames > 0 and totalShots > 0:
+        fgp = ( totalMakes / totalShots ) * 100
+        print(playerName , "shoots" , fgp , "%.")
+    else:
+        print(playerName , "has no recorded games or the name was not found.")  
+    
+def findFG3():
+    b_column = ws["B"]
+    print("Which player would you like to find their 3-point shooting percentage?")
+    userInput = input()
+    # findGamesPlayed = userInput
+    totalShots = 0
+    totalMakes = 0
+    fg3 = 0
+    k_column = ws["K"]
+    l_column = ws["L"]
+    for player, attempts , made in zip(b_column, l_column, k_column):
+        if userInput == player.value:
+            totalShots = totalShots + int(attempts.value)
+            totalMakes = totalMakes + int(made.value)
+    totalGames = findTotalGamesFor(userInput)
+    if totalGames > 0 and totalShots > 0:
+        fg3 = ( totalMakes / totalShots ) * 100
+        print(userInput , "shoots" , fg3 , "% from 3.")
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")
+
+def findFG32(playerName):
+    b_column = ws["B"]
+    totalShots = 0
+    totalMakes = 0
+    fg3 = 0
+    k_column = ws["K"]
+    l_column = ws["L"]
+    for player, attempts , made in zip(b_column, l_column, k_column):
+        if playerName == player.value:
+            totalShots = totalShots + int(attempts.value)
+            totalMakes = totalMakes + int(made.value)
+    totalGames = findTotalGamesFor(playerName)
+    if totalGames > 0 and totalShots > 0:
+        fg3 = ( totalMakes / totalShots ) * 100
+        print(playerName , "shoots" , fg3 , "% from 3.")
+    else:
+        print(playerName , "has no recorded games or the name was not found.")
+
+
+def findPPG():
+    b_column = ws["B"]
+    print("Which player would you like to find their points per game?")
+    userInput = input()
+    # findGamesPlayed = userInput
+    totalPoints = 0
+    ppg = 0 
+    y_column = ws["Y"] 
+    for player, points in zip(b_column, y_column):
+        if userInput == player.value:
+            totalPoints = totalPoints + int(points.value)
+    totalGames = findTotalGamesFor(userInput)
+    if totalGames > 0:
+        ppg = totalPoints / findTotalGamesFor(userInput)
+        print(userInput , "averages" , ppg , "points per game.")
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")
+      
+def findPPG2(playerName):
+    b_column = ws["B"]
+    totalPoints = 0
+    ppg = 0
+    y_column = ws["Y"]
+    for player, points in zip(b_column, y_column):
+        if playerName == player.value:
+            totalPoints = totalPoints + int(points.value)
+    totalGames = findTotalGamesFor(playerName)
+    if totalGames > 0:
+        ppg = totalPoints / findTotalGamesFor(playerName)
+        # print(playerName , "averages" , ppg , "points per game.")
+        return(ppg)
+    else:
+        print(playerName , "has no recorded games or the name was not found.")
+    
+def findRPG():
+    b_column = ws["B"]
+    print("Which player would you like to find their rebounds per game?")
+    userInput = input()
+    # findGamesPlayed = userInput
+    totalRebounds = 0
+    rpg = 0
+    s_column = ws["S"]
+    for player, rebounds in zip(b_column, s_column):
+        if userInput == player.value:
+            totalRebounds = totalRebounds + int(rebounds.value)
+    totalGames = findTotalGamesFor(userInput)
+    if totalGames > 0:
+        rpg = totalRebounds / findTotalGamesFor(userInput)
+        print(userInput , "averages" , rpg , "rebounds per game.")
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")
+    
+def findRPG2(playerName):
+    b_column = ws["B"]
+    totalRebounds = 0
+    rpg = 0
+    s_column = ws["S"]
+    for player, rebounds in zip(b_column, s_column):
+        if playerName == player.value:
+            totalRebounds = totalRebounds + int(rebounds.value)
+    totalGames = findTotalGamesFor(playerName)
+    if totalGames > 0:
+        rpg = totalRebounds / findTotalGamesFor(playerName)
+        return(rpg)
+        # print(playerName , "averages" , rpg , "rebounds per game.")
+    else:
+        print(playerName , "has no recorded games or the name was not found.")
+
+def findSPG():
+    b_column = ws["B"]
+    print("Which player would you like to find their steals per game?")
+    userInput = input()
+    # findGamesPlayed = userInput
+    totalSteals = 0
+    spg = 0
+    u_column = ws["U"]
+    for player, steals in zip(b_column, u_column):
+        if userInput == player.value:
+            totalSteals = totalSteals + int(steals.value)
+    totalGames = findTotalGamesFor(userInput)
+    if totalGames > 0:
+        spg = totalSteals / findTotalGamesFor(userInput)
+        print(userInput , "averages" , spg , "steals per game.")
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")
+
+def findSPG2(playerName):
+    b_column = ws["B"]
+    totalSteals = 0
+    spg = 0
+    u_column = ws["U"]
+    for player, steals in zip(b_column, u_column):
+        if playerName == player.value:
+            totalSteals = totalSteals + int(steals.value)
+    totalGames = findTotalGamesFor(playerName)
+    if totalGames > 0:
+        spg = totalSteals / findTotalGamesFor(playerName)
+        # print(playerName , "averages" , spg , "steals per game.")
+        return(spg)
+    else:
+        print(playerName , "has no recorded games or the name was not found.")
+
+def findBPG():
+    b_column = ws["B"]
+    print("Which player would you like to find their blocks per game?")
+    userInput = input()
+    # findGamesPlayed = userInput
+    totalBlocks = 0
+    bpg = 0
+    v_column = ws["V"]
+    for player, blocks in zip(b_column, v_column):
+        if userInput == player.value:
+            totalBlocks = totalBlocks + int(blocks.value)
+    totalGames = findTotalGamesFor(userInput)
+    if totalGames > 0:
+        bpg = totalBlocks / findTotalGamesFor(userInput)
+        print(userInput , "averages" , bpg , "blocks per game.")
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")
+    
+def findBPG2(playerName):
+    b_column = ws["B"]
+    totalBlocks = 0
+    bpg = 0
+    v_column = ws["V"]
+    for player, blocks in zip(b_column, v_column):
+        if playerName == player.value:
+            totalBlocks = totalBlocks + int(blocks.value)
+    totalGames = findTotalGamesFor(playerName)
+    if totalGames > 0:
+        bpg = totalBlocks / findTotalGamesFor(playerName)
+        # print(playerName , "averages" , bpg , "blocks per game.")
+        return(bpg)
+    else:
+        print(playerName , "has no recorded games or the name was not found.")  
+    
+def findTOPG():
+    b_column = ws["B"]
+    print("Which player would you like to find their turnovers per game?")
+    userInput = input()
+    # findGamesPlayed = userInput
+    totalTurnovers = 0
+    topg = 0
+    w_column = ws["W"]
+    for player, turnovers in zip(b_column, w_column):
+        if userInput == player.value:
+            totalTurnovers = totalTurnovers + int(turnovers.value)
+    totalGames = findTotalGamesFor(userInput)
+    if totalGames > 0:
+        topg = totalTurnovers / findTotalGamesFor(userInput)
+        print(userInput , "averages" , topg , "turnovers per game.")
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")
+
+def findTOPG2(playerName):
+    b_column = ws["B"]
+    totalTurnovers = 0
+    topg = 0
+    w_column = ws["W"]
+    for player, turnovers in zip(b_column, w_column):
+        if playerName == player.value:
+            totalTurnovers = totalTurnovers + int(turnovers.value)
+    totalGames = findTotalGamesFor(playerName)
+    if totalGames > 0:
+        topg = totalTurnovers / findTotalGamesFor(playerName)
+        # print(playerName , "averages" , topg , "turnovers per game.")
+        return(topg)
+    else:
+        print(playerName , "has no recorded games or the name was not found.")
+
+def findMPG():
+    b_column = ws["B"]
+    print("Which player would you like to find their minutes per game?")
+    userInput = input()
+    # findGamesPlayed = userInput
+    totalMinutes = 0
+    mpg = 0
+    g_column = ws["G"]
+    for player, minutes in zip(b_column, g_column):
+        if userInput == player.value:
+            minutesTest = minutes.value
+            minutesInMinutes , secondsInMinutes = minutesTest.split(":")
+            minutesInMinutes = int(minutesInMinutes)
+            secondsInMinutes = int(secondsInMinutes)
+            secondsInMinutes = secondsInMinutes / 60
+            totalMinutes = totalMinutes + minutesInMinutes + secondsInMinutes
+    totalGames = findTotalGamesFor(userInput)
+    if totalGames > 0:
+        mpg = totalMinutes / findTotalGamesFor(userInput)
+        print(userInput , "averages" , mpg , "minutes per game.")
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")
+
+def findMPG2(playerName):
+    b_column = ws["B"]
+    totalMinutes = 0
+    mpg = 0
+    g_column = ws["G"]
+    for player, minutes in zip(b_column, g_column):
+        if playerName == player.value:
+            minutesTest = minutes.value
+            minutesInMinutes , secondsInMinutes = minutesTest.split(":")
+            minutesInMinutes = int(minutesInMinutes)
+            secondsInMinutes = int(secondsInMinutes)
+            secondsInMinutes = secondsInMinutes / 60
+            totalMinutes = totalMinutes + minutesInMinutes + secondsInMinutes
+    totalGames = findTotalGamesFor(playerName)
+    if totalGames > 0:
+        mpg = totalMinutes / findTotalGamesFor(playerName)
+        print(playerName , "averages" , mpg , "minutes per game.")
+    else:
+        print(playerName , "has no recorded games or the name was not found.")
+
+def findPlusMinus():
+    b_column = ws["B"]
+    print("Which player would you like to find their plus minus?")
+    userInput = input()
+    plusMinus = 0
+    z_column = ws["Z"]
+    for player, pm in zip(b_column, z_column):
+        if userInput == player.value:
+            plusMinus = plusMinus + int(pm.value)
+    totalGames = findTotalGamesFor(userInput)
+    if totalGames > 0:
+        print(userInput , "has a season plus-minus of" , plusMinus)
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")
+    
+def compareTwo():
+    print("What is the first player in your comparison?")
+    playerOne = input()
+    print("What is the second player you are comparing" , playerOne , "to?")
+    playerTwo = input()
+    print(playerOne, "averages", findPPG2(playerOne), "points per game.")
+    print(playerTwo, "averages", findPPG2(playerTwo), "points per game.")
+    print(playerOne, "averages", findAPG2(playerOne), "assists per game.")
+    print(playerTwo, "averages", findAPG2(playerTwo), "assists per game.")
+    print(playerOne, "averages", findRPG2(playerOne), "rebounds per game.")
+    print(playerTwo, "averages", findRPG2(playerTwo), "rebounds per game.")
+    print(playerOne, "averages", findSPG2(playerOne), "steals per game.")
+    print(playerTwo, "averages", findSPG2(playerTwo), "steals per game.")
+    print(playerOne, "averages", findBPG2(playerOne), "blocks per game.")
+    print(playerTwo, "averages", findBPG2(playerTwo), "blocks per game.")
+    print(playerOne, "averages", findTOPG2(playerOne), "turnovers per game.")
+    print(playerTwo, "averages", findTOPG2(playerTwo), "turnovers per game.")
+    findMPG2(playerOne)
+    findMPG2(playerTwo)
+    print(" ")
+    
+def compareTwoPercents():
+    print("What is the first player in your comparison?")
+    playerOne = input()
+    print("What is the second player you are comparing" , playerOne , "to?")
+    playerTwo = input()
+    findFGP2(playerOne)
+    findFGP2(playerTwo)
+    findFG32(playerOne)
+    findFG32(playerTwo)    
+    
+def homeVsAway():
+    print("What player woukd you like to compare their home and away stats?")
+    userInput = input()
+    b_column = ws["B"]
+    homeTotalPoints = 0
+    homePPG = 0
+    awayTotalPoints = 0
+    awayTotalShots = 0
+    awayTotalMakes = 0
+    homeTotalShots = 0
+    homeTotalMakes = 0
+    awayTotalShots3 = 0
+    awayTotalMakes3 = 0
+    homeTotalShots3 = 0
+    homeTotalMakes3 = 0
+    homefg = 0
+    awayfg = 0
+    homefg3 = 0
+    awayfg3 = 0
+    awayPPG = 0
+    y_column = ws["Y"]
+    d_column = ws["D"]
+    h_column = ws["H"]
+    i_column = ws["I"]
+    k_column = ws["K"]
+    l_column = ws["L"] 
+    for player, points, aways, makes, takes, makes3, takes3 in zip(b_column, y_column, d_column, h_column, i_column, k_column, l_column):
+        if userInput == player.value:
+            if aways.value == "@":
+                awayTotalPoints = awayTotalPoints + int(points.value)
+                awayTotalShots = awayTotalShots + int(takes.value)
+                awayTotalMakes = awayTotalMakes + int(makes.value)
+                awayTotalShots3 = awayTotalShots3 + int(takes3.value)
+                awayTotalMakes3 = awayTotalMakes3 + int(makes3.value)
+            else:
+                homeTotalPoints = homeTotalPoints + int(points.value)
+                homeTotalShots = homeTotalShots + int(takes.value)
+                homeTotalMakes = homeTotalMakes + int(makes.value)
+                homeTotalShots3 = homeTotalShots3 + int(takes3.value)
+                homeTotalMakes3 = homeTotalMakes3 + int(makes3.value)
+    totalHomeGames = findTotalHomeGames(userInput)
+    totalAwayGames = findTotalAwayGames(userInput)
+    if totalHomeGames & totalAwayGames > 0:
+        homePPG = homeTotalPoints / findTotalHomeGames(userInput)
+        awayPPG = awayTotalPoints / findTotalAwayGames(userInput)
+        homefg = homeTotalMakes / homeTotalShots
+        awayfg = awayTotalMakes / awayTotalShots
+        homefg3 = homeTotalMakes3 / homeTotalShots3
+        awayfg3 = awayTotalMakes3 / awayTotalShots3
+        print("At home" , userInput , "averages" , homePPG , "points per game in" , totalHomeGames , "games.")
+        print("Away" , userInput , "averages" , awayPPG , "points per game in" , totalAwayGames , "games.")
+        print("At home" , userInput , "shoots" , homefg, "and", homefg3, "from three.")
+        print("Away" , userInput , "shoots" , awayfg , "and" , awayfg3, "from three.")
+    else:
+        print(userInput , "has no recorded games or the name was not found.")
+    print(" ")    
+    
+def findTotalGames(): 
+    b_column = ws["B"]
+    print("Which player would you like to find their games played?")
+    userInput = input()
+    findGamesPlayed = userInput
+    playerGamesPlayed = 0
+    for cell in b_column:
+        if cell.value == findGamesPlayed:
+            playerGamesPlayed = playerGamesPlayed + 1   
+    print(playerGamesPlayed)
+    print(" ")
+
+def findTotalHomeGames(playerName): 
+    b_column = ws["B"]
+    d_column = ws["D"]
+    findGamesPlayed = playerName
+    homePlayerGamesPlayed = 0
+    for i in range(len(b_column)):
+        if b_column[i].value == findGamesPlayed:
+            if d_column[i].value != "@":
+                homePlayerGamesPlayed = homePlayerGamesPlayed + 1   
+    return homePlayerGamesPlayed
+    print(" ")
+
+def findTotalAwayGames(playerName): 
+    b_column = ws["B"]
+    d_column = ws["D"]
+    findGamesPlayed = playerName
+    awayPlayerGamesPlayed = 0
+    for i in range(len(b_column)):
+        if b_column[i].value == findGamesPlayed:
+            if d_column[i].value == "@":
+                awayPlayerGamesPlayed = awayPlayerGamesPlayed + 1 
+    return awayPlayerGamesPlayed
+    print(" ")
+
+def bettingLine():
+    print("Which player are you betting on?")
+    player = input()
+    print("Which stat are you betting on?")
+    statCat = input().lower()
+    print("What is the line set at?")
+    lineSet = float(input())
+    # fiveTest = lastFive(player, statCat, lineSet)
+    if statCat == "points":
+        print("For the last five games", player, "has had", lastFive(player, statCat, lineSet), "point games")
+        print("Overall,", player, "averages", findPPG2(player), "points this season")
+        if findPPG2(player) > lineSet:
+            print("On average", player, "hits the over on this line")
+        else:
+            print("On average", player, "hits the under on this line")
+        print("Over the last five games", player, "would have hit the over on this line", lineTest(player, statCat, lineSet), "times out of 5")
+    elif statCat == "rebounds":
+        print("For the last five games", player, "has had", lastFive(player, statCat, lineSet), "rebound games")
+        print("Overall,", player, "averages", findRPG2(player), "rebounds this season")
+        if findRPG2(player) > lineSet:
+            print("On average", player, "hits the over on this line")
+        else:
+            print("On average", player, "hits the under on this line")
+        print("Over the last five games", player, "would have hit the over on this line", lineTest(player, statCat, lineSet), "times out of 5")
+    elif statCat == "steals":
+        print("For the last five games", player, "has had", lastFive(player, statCat, lineSet), "steal games")
+        print("Overall,", player, "averages", findSPG2(player), "steals this season")
+        if findSPG2(player) > lineSet:
+            print("On average", player, "hits the over on this line")
+        else:
+            print("On average", player, "hits the under on this line")
+        print("Over the last five games", player, "would have hit the over on this line", lineTest(player, statCat, lineSet), "times out of 5")
+    elif statCat == "assists":
+        print("For the last five games", player, "has had", lastFive(player, statCat, lineSet), "assist games")
+        print("Overall,", player, "averages", findAPG2(player), "assists this season")
+        if findAPG2(player) > lineSet:
+            print("On average", player, "hits the over on this line")
+        else:
+            print("On average", player, "hits the under on this line")
+        print("Over the last five games", player, "would have hit the over on this line", lineTest(player, statCat, lineSet), "times out of 5")
+    elif statCat == "blocks":
+        print("For the last five games", player, "has had", lastFive(player, statCat, lineSet), "block games")
+        print("Overall,", player, "averages", findBPG2(player), "blocks this season")
+        if findBPG2(player) > lineSet:
+            print("On average", player, "hits the over on this line")
+        else:
+            print("On average", player, "hits the under on this line")
+        print("Over the last five games", player, "would have hit the over on this line", lineTest(player, statCat, lineSet), "times out of 5")
+    elif statCat == "turnovers":
+        print("For the last five games", player, "has had", lastFive(player, statCat, lineSet), "turnover games")
+        print("Overall,", player, "averages", findTOPG2(player), "turnovers this season")
+        if findTOPG2(player) > lineSet:
+            print("On average", player, "hits the over on this line")
+        else:
+            print("On average", player, "hits the under on this line")
+        print("Over the last five games", player, "would have hit the over on this line", lineTest(player, statCat, lineSet), "times out of 5")
+    else:
+        print(statCat, "is not a valid option.")
+    print("")
+    
+def lastFive(playerName, stat, lineSet):
+    b_column = ws["B"]
+    y_column = ws["Y"]
+    s_column = ws["S"]
+    u_column = ws["U"]
+    t_column = ws["T"]
+    v_column = ws["V"]
+    w_column = ws["W"]
+    blankList = []
+    if stat == "points":
+        for player, points in zip(b_column, y_column):
+            if player.value == playerName:
+                blankList.append(int(points.value))
+                lastFive = blankList[-5:]
+    elif stat == "rebounds":
+        for player, rebounds in zip(b_column, s_column):
+            if player.value == playerName:
+                blankList.append(rebounds.value)
+                lastFive = blankList[-5:]
+    elif stat == "steals":
+        for player, steals in zip(b_column, u_column):
+            if player.value == playerName:
+                blankList.append(steals.value)
+                lastFive = blankList[-5:]
+    elif stat == "assists":
+        for player, assists in zip(b_column, t_column):
+            if player.value == playerName:
+                blankList.append(assists.value)
+                lastFive = blankList[-5:]
+    elif stat == "blocks":
+        for player, blocks in zip(b_column, v_column):
+            if player.value == playerName:
+                blankList.append(blocks.value)
+                lastFive = blankList[-5:]
+    elif stat == "turnovers":
+        for player, turnovers in zip(b_column, w_column):
+            if player.value == playerName:
+                blankList.append(turnovers.value)
+                lastFive = blankList[-5:]
+    else:
+        print("Invalid stat category")
+    return(lastFive)
+
+def lineTest(playerName, stat, lineSet):
+    recents = lastFive(playerName, stat, lineSet)
+    hitCount = 0
+    for x in range(len(recents)):
+        if lineSet < int(recents[x]):
+             hitCount = hitCount + 1
+    return(hitCount)
+# main function always running 
+
+userInput = 1 
+while userInput != 0:   
+    print("Welcome to the 2023-2024 season NBA stats finder.")
+    print("Be sure to capitalize players names and remember accent marks as needed.")
+    print("What are you looking to find?")
+    print("(1). Find total games played for a player")
+    print("(2). Find average points per game for a player")
+    print("(3). Find average assists per game for a player")
+    print("(4). Find average rebounds per game for a player")
+    print("(5). Find average steals per game for a player")
+    print("(6). Find average blocks per game for a player")
+    print("(7). Find average turnovers per game for a player")
+    print("(8). Find average minutes per game for a player")
+    print("(9). Find field goal percentage for a player")
+    print("(10). Find 3-point percentage for a player")
+    print("(11). Find the overall box plus-minus for a player")
+    print("(12). Compare the stats of two players")
+    print("(13). Compare the shooting percentages of two players")
+    print("(14). Find the difference in points and shooting percentages from home and away games")
+    print("(15). Should I take this betting line based on averages and last five games?")
+    print("(0). Exit program")
+    userInput = int(input())
+    if userInput == 1:
+        findTotalGames()
+    elif userInput == 2: 
+        findPPG() 
+    elif userInput == 3:
+        findAPG()
+    elif userInput == 4:
+        findRPG()
+    elif userInput == 5: 
+        findSPG()
+    elif userInput == 6:
+        findBPG()
+    elif userInput == 7:
+        findTOPG()
+    elif userInput == 8:
+        findMPG()
+    elif userInput == 9:
+        findFGP()
+    elif userInput == 10:
+        findFG3()
+    elif userInput == 11:
+        findPlusMinus()
+    elif userInput == 12:
+         compareTwo()
+    elif userInput == 13:
+        compareTwoPercents()
+    elif userInput == 14:
+        homeVsAway()
+    elif userInput == 15:
+        bettingLine()
+    elif userInput == 0:
+        quit()
+    else:
+        print("Please enter a valid option") 
